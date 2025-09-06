@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Football Team Dashboard</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+    }
+    header {
+      background: #2c3e50;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    .container {
+      padding: 2rem;
+    }
+    .team-info {
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+    .players {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .player-card {
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .filter {
+      margin-bottom: 1rem;
+    }
+    select {
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>⚽ Football Team Dashboard</h1>
+  </header>
+  <div class="container">
+    <div class="team-info">
+      <h2>Team: Thunder FC</h2>
+      <p>Coach: Alex Morgan</p>
+      <p>League: Premier League</p>
+    </div>
+
+    <div class="filter">
+      <label for="positionFilter">Filter by Position:</label>
+      <select id="positionFilter" onchange="filterPlayers()">
+        <option value="All">All</option>
+        <option value="Forward">Forward</option>
+        <option value="Midfielder">Midfielder</option>
+        <option value="Defender">Defender</option>
+        <option value="Goalkeeper">Goalkeeper</option>
+      </select>
+    </div>
+
+    <div class="players" id="playerContainer"></div>
+  </div>
+
+  <script>
+    const players = [
+      { name: "Leo Carter", position: "Forward", goals: 12 },
+      { name: "Mason Lee", position: "Midfielder", goals: 5 },
+      { name: "Ethan Ray", position: "Defender", goals: 2 },
+      { name: "Noah Smith", position: "Goalkeeper", goals: 0 },
+      { name: "Lucas King", position: "Forward", goals: 9 },
+      { name: "Ryan Cruz", position: "Midfielder", goals: 4 },
+    ];
+
+    function displayPlayers(filtered = players) {
+      const container = document.getElementById("playerContainer");
+      container.innerHTML = "";
+      filtered.forEach(player => {
+        const card = document.createElement("div");
+        card.className = "player-card";
+        card.innerHTML = `
+          <h3>${player.name}</h3>
+          <p>Position: ${player.position}</p>
+          <p>Goals: ${player.goals}</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function filterPlayers() {
+      const selected = document.getElementById("positionFilter").value;
+      if (selected === "All") {
+        displayPlayers();
+      } else {
+        const filtered = players.filter(p => p.position === selected);
+        displayPlayers(filtered);
+      }
+    }
+
+    // Initial load
+    displayPlayers();
+  </script>
+</body>
+</html>
